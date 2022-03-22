@@ -169,6 +169,7 @@ def break_ceasar_selection(enc):
         print('Decrypted: ', dec, ', key = ', j)
     return True
 
+
 '''
 Взлом шифра сдвига с применением частотного анализа
 '''
@@ -199,7 +200,7 @@ def break_ceasar(enc):
         dec_check = move_dec(key, enc)
         print(dec_check)
     
-    answer = input('Is there what youre looking for? (y or n)')
+    answer = input('Is there what youre looking for? (y or n): ')
     if answer == 'y':
         return True
     if answer == 'n':
