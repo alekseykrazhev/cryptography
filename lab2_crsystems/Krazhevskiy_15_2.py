@@ -154,6 +154,63 @@ def check_move_key(key):
     return True
 
 
+'''
+функция взлома простым подбором ключа
+'''
+def break_ceasar_selection(enc):
+    dec = ''
+    for j in range(26):
+        dec = ''
+        for i in range(len(enc)):
+            y = alphabet.index(enc[i])
+            indx = (y - j) % 26
+            char = alphabet[indx]
+            dec += char
+        print('Decrypted: ', dec, ', key = ', j)
+    return True
+
+'''
+Взлом шифра сдвига с применением частотного анализа
+'''
+def break_ceasar(enc):
+    count = 0
+    frequency = []
+
+    for i in range(26):
+        for j in enc:
+            if j == alphabet[i]:
+                count += 1
+        count = count * 100 / len(enc)
+        frequency.append(count)
+        count = 0
+
+    maximum = 0
+    for i in range(25):
+        if frequency[i+1] > frequency[i]:
+            maximum = frequency[i+1]
+    
+    store_maxes = []
+    for i in range(26):
+        if frequency[i] == maximum:
+            store_maxes.append(i)
+    
+    for i in store_maxes:
+        key = abs(i - 4)
+        dec_check = move_dec(key, enc)
+        print(dec_check)
+    
+    answer = input('Is there what youre looking for? (y or n)')
+    if answer == 'y':
+        return True
+    if answer == 'n':
+        print('Starting a simple selection algorithm...')
+        break_ceasar_selection(enc)
+    else: 
+        print('invalid input!')
+
+    return False
+
+
 if __name__ == '__main__':
     inp_key = open('key.txt', 'r')
     inp_mes = open('message.txt', 'r')
@@ -180,3 +237,7 @@ if __name__ == '__main__':
     print ('Hill decription: ', decrypted_h)
 
     out_decrypted.close()
+
+    print('Trying to break Ceasar encryption...')
+    break_ceasar(encrypted_m)
+    print('Programm executed correctly!')
