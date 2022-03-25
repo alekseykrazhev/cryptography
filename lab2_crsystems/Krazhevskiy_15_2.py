@@ -2,7 +2,8 @@ import math
 import numpy as np
 
 alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-alphabet_rus = ['А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я','.',',',' ','?']
+alphabet_rus = ['А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч',
+    'Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я','.',',',' ','?']
 
 
 def move_enc(key, mes):
@@ -65,7 +66,7 @@ def hill_enc(text, message):
 
     enc = []
     for i in range(len(parts_n)):
-        enc.append(parts_n[i].dot(key) % 37)
+        enc.append(np.matrix.round(parts_n[i].dot(key)) % 37)
     
     enc_n = np.array(enc)
     encoded = ''
@@ -106,7 +107,7 @@ def hill_dec(text, message):
     k = round(np.linalg.det(key))
 
     d, x, y = gcd_extended(k, 37)
-    
+
     det = 0
     if k < 0 and x > 0:
         det = x
@@ -138,7 +139,7 @@ def hill_dec(text, message):
     dec_part = []
     decoded = ''
     for i in range(len(parts_n)):
-        dec_part.append(parts_n[i].dot(nn) % 37)
+        dec_part.append(np.matrix.round(parts_n[i].dot(nn)) % 37)
         
     dec_part_n = np.array(dec_part)
     for i in range(len(dec_part_n)):
@@ -224,7 +225,7 @@ if __name__ == '__main__':
 
     encrypted_m = move_enc(key, message)
     encrypted_h = hill_enc(key_hill, 'ЗАШИФРОВАННЫЙ ТЕКСТ')
-    print('Hill encryption: ', encrypted_h)
+    #print('Hill encryption: ', encrypted_h)
     out_encrypted.write('First encryption result:\n\t')
     out_encrypted.write(encrypted_m)
     out_encrypted.write('\nSecond encryption result:\n\t')
@@ -233,9 +234,11 @@ if __name__ == '__main__':
     out_encrypted.close()
 
     decrypted_h = hill_dec(key_hill, encrypted_h)
-    out_decrypted.write('Decryption results:\n\t')
+    out_decrypted.write('First decryption results:\n\t')
     out_decrypted.write(move_dec(key, encrypted_m))
-    print ('Hill decription: ', decrypted_h)
+    out_decrypted.write('\nSecond decryption results:\n\t')
+    out_decrypted.write(decrypted_h)
+    #print ('Hill decription: ', decrypted_h)
 
     out_decrypted.close()
 
