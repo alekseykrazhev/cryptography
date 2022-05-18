@@ -13,7 +13,7 @@ class Geffe:
         s1 = self.seq1.make_shift()
         return (s1 & self.seq2.make_shift()) ^ ((s1 ^ 1) * self.seq3.make_shift())
 
-    def periods(self, fill1: list, fill2: list, fill3: list) -> list:
+    def periods(self) -> list:
         return [self.seq1.get_period(), self.seq2.get_period(), self.seq3.get_period()]
 
 
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     seq3 = lfsr(taps={8, 6, 5, 2}, seed="01000110")
 
     geffe = Geffe(seq1, seq2, seq3)
-    print('{} periods'.format(geffe.periods(fill1.copy(), fill2.copy(), fill3.copy())))
+    print('{} periods'.format(geffe.periods()))
     seq = [geffe.step() for _ in range(10000)]
     zeros = seq.count(0)
 
