@@ -1,7 +1,5 @@
 # implementation of RSA encryption and decryption
 
-import random
-
 
 def gcd(a: int, b: int) -> int:
     """
@@ -22,7 +20,7 @@ def fast_pow(a, n, mod=1):
             res *= a % mod
         a *= a % mod
         n >>= 1
-    return res
+    return res % mod
 
 
 def eea(a, b):
@@ -78,7 +76,7 @@ def encrypt(pk, plaintext: int) -> int:
     Encrypts a plaintext using a public key.
     """
     key, n = pk
-    cipher = fast_pow(int(plaintext), key, n) % n
+    cipher = fast_pow(int(plaintext), key, n)
     return cipher
 
 
@@ -87,5 +85,5 @@ def decrypt(pk, ciphertext: int) -> int:
     Decrypts a ciphertext using a private key.
     """
     key, n = pk
-    plain = fast_pow(int(ciphertext), key, n) % n
+    plain = fast_pow(int(ciphertext), key, n)
     return plain

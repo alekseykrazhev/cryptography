@@ -1,6 +1,7 @@
 # lab 5 var 8 RSA encryption and decryption by Aleksey Krazhevskiy
 
 from RSA import *
+from Pollard import pollard_p
 
 
 if __name__ == '__main__':
@@ -28,3 +29,9 @@ if __name__ == '__main__':
     x2 = decrypt(key[1], y2)
     print(f"Decrypted x2 = {x2}")
     print(f"y2 = {y2}")
+
+    # factorization using Pollard p-1 algorithm
+    num = 10001
+    bound = 10
+    fact = pollard_p(num, bound)
+    print(f"Factorization of {num} with bound {bound}: {fact}")
