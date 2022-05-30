@@ -1,0 +1,10 @@
+
+import RC5
+
+
+if __name__ == '__main__':
+    key = b'\x91\x5F\x46\x19\xBE\x41\xB2\x51\x63\x55\xA5\x01\x10\xA9\xCE\x91'
+    testRC5 = RC5.RC5(32, 12, key)
+    plainText = b'\x21\xA5\xDB\xEE\x15\x4B\x8F\x6D'
+    cipherText = b'\xF7\xC0\x13\xAC\x5B\x2B\x89\x52'
+    print(testRC5.encryptBytes(plainText) == cipherText)
